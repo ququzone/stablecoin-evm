@@ -41,7 +41,7 @@ fi
 if ! command -v forge &> /dev/null || [ ! "$(forge -V | grep -Eo '\b\w{7}\b')" = "2cf84d9" ]
 then
   echo "Installing foundry at $FOUNDRY_VERSION..."
-  foundryup --version $FOUNDRY_VERSION
+  # foundryup --version $FOUNDRY_VERSION
 fi
 
 echo "Updating git submodules..."

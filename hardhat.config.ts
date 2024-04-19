@@ -40,10 +40,13 @@ import "./scripts/hardhat/verifyBytecodeOnChain";
 
 dotenv.config();
 
+const PRIVATE_KEY = process.env.DEPLOYER_PRIVATE_KEY;
+const accounts = PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [];
+
 // Defaults to 1.3 to be equivalent with Foundry
-const gasMultiplier = process.env.GAS_MULTIPLIER
-  ? parseFloat(process.env.GAS_MULTIPLIER) / 100
-  : 1.3;
+// const gasMultiplier = process.env.GAS_MULTIPLIER
+//    ? parseFloat(process.env.GAS_MULTIPLIER) / 100
+//    : 1.3;
 
 const hardhatConfig: HardhatUserConfig = {
   solidity: {
@@ -62,13 +65,16 @@ const hardhatConfig: HardhatUserConfig = {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {},
+    dev: {
+      url: "http://127.0.0.1:8545/",
+      accounts: accounts,
+    },
     testnet: {
       url: process.env.TESTNET_RPC_URL || "",
-      gasMultiplier,
+      accounts: accounts,
     },
     mainnet: {
       url: process.env.MAINNET_RPC_URL || "",
-      gasMultiplier,
     },
   },
   typechain: {
